@@ -390,8 +390,6 @@ local function autoHatch()
             pcall(function()
                 Events.ConstructHiveCellFromEgg:InvokeServer(unpack(args))
             end)
-
-            task.wait(3)
             return
         end
     end
