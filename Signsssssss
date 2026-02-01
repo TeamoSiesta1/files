@@ -397,7 +397,7 @@ local function autoHatch()
 
             local RS = game:GetService("ReplicatedStorage")
             local Events = RS:WaitForChild("Events")
-
+			print("prntStarEgg")
             Events.StickerPrinterActivate:FireServer("Star Egg")
 
             return
