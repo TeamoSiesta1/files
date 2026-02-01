@@ -387,27 +387,21 @@ local function autoHatch()
                 [5] = false
             }
 
+            -- hatch
             pcall(function()
                 Events.ConstructHiveCellFromEgg:InvokeServer(unpack(args))
             end)
+
+            -- 👉 hatch xong thì chạy printer
+            task.wait(0.1)
+
+            local RS = game:GetService("ReplicatedStorage")
+            local Events = RS:WaitForChild("Events")
+
+            Events.StickerPrinterActivate:FireServer("Star Egg")
+
             return
         end
-    end
-end
-
-local function autoPrinter()
-    local cfg = getgenv().Config["Auto Printer"]
-    if not cfg or not cfg["Enable"] then return end
-    if tick() - PRINTER_CD < 10 then return end
-
-    local inv = getInventory()
-    if (inv["Star Egg"] or 0) > 0 then
-        PRINTER_CD = tick()
-        Events.StickerPrinterActivate:FireServer("Star Egg")
-
-        sendWebhook("Star Egg roll printer!!!", {
-            { name = "Player", value = Player.Name, inline = false }
-        }, 16777215)
     end
 end
 
@@ -504,7 +498,6 @@ while true do
     checkStarSign()
     autoFeed()
     autoHatch()
-    autoPrinter()
     checkQuest()
     task.wait(5)
 end
